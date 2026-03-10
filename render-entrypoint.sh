@@ -23,7 +23,8 @@ DB_ARGS+=("--proxy-mode")
 # If a specific database name is set, use it directly
 if [ -n "$DB_NAME_VAL" ]; then
     DB_ARGS+=("--database" "$DB_NAME_VAL")
-    DB_ARGS+=("--dbfilter" "^${DB_NAME_VAL}\$")
+    # dbfilter is set via config file, not CLI in Odoo 19
+    sed -i "s/^;\? *dbfilter.*/dbfilter = ^${DB_NAME_VAL}\$/" /etc/odoo/odoo.conf || true
 fi
 
 # Admin master password for the database manager
