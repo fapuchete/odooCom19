@@ -1,0 +1,34 @@
+databases:
+  - name: odoo-db
+    plan: free
+
+services:
+  - type: web
+    name: odoo-19
+    runtime: docker
+    plan: free
+    envVars:
+      - key: DB_HOST
+        fromDatabase:
+          name: odoo-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: odoo-db
+          property: port
+      - key: DB_USER
+        fromDatabase:
+          name: odoo-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: odoo-db
+          property: password
+      - key: DB_NAME
+        fromDatabase:
+          name: odoo-db
+          property: database
+      - key: ADMIN_PASSWORD
+        generateValue: true
+      - key: INIT_DB
+        value: "true"
