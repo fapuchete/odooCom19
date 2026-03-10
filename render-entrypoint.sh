@@ -27,9 +27,9 @@ if [ -n "$DB_NAME_VAL" ]; then
     sed -i "s/^;\? *dbfilter.*/dbfilter = ^${DB_NAME_VAL}\$/" /etc/odoo/odoo.conf || true
 fi
 
-# Admin master password for the database manager
+# Admin master password for the database manager (set via config file, not CLI in Odoo 19)
 if [ -n "$ADMIN_PASSWORD" ]; then
-    DB_ARGS+=("--admin_passwd" "$ADMIN_PASSWORD")
+    sed -i "s/^;\? *admin_passwd.*/admin_passwd = ${ADMIN_PASSWORD}/" /etc/odoo/odoo.conf || true
 fi
 
 # Initialize database with base module on first run
